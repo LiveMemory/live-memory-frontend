@@ -1,12 +1,43 @@
-# React + Vite
+# Live Memory Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é o frontend do projeto **Live Memory**, desenvolvido em **React + Vite**. O projeto tem como objetivo fornecer uma interface interativa para visualização e manipulação de memórias e histórias de vida.
 
-Currently, two official plugins are available:
+## 🚀 Tecnologias Utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [JavaScript (JSX)](https://reactjs.org/docs/introducing-jsx.html)
+- [CSS Modules / Styled Components / Tailwind (caso aplicável)]
 
-## Expanding the ESLint configuration
+## 📁 Estrutura do Projeto
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+src/ │ ├── assets/ # Imagens, fontes e arquivos estáticos ├── components/ # Componentes reutilizáveis │ ├── AcessToActionLargest/ │ ├── ButtonSelectOption/ │ ├── CardExpandedView/ │ ├── CardViewDisplay/ │ ├── ComumViewCardDefault/ │ ├── HistoryTitle/ │ ├── LivingMemory/ │ ├── MemorableUnionOfHistories/ │ ├── MemoryDropDown/ │ ├── MemoryFooter/
+
+markdown
+Copiar
+Editar
+
+## 🧩 Componentes Principais
+
+- **CardExpandedView**: Responsável por exibir uma visão detalhada das memórias.
+- **ButtonSelectOption**: Botões interativos para seleção de opções.
+- **MemoryDropDown**: Dropdown para filtros ou seleção de elementos de memória.
+- **MemorableUnionOfHistories**: Componente que une diferentes histórias memoráveis.
+
+## 🔧 Como Rodar o Projeto
+
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/live-memory-frontend.git
+Instale as dependências:
+
+bash
+Copiar
+Editar
+npm install
+Rode o projeto localmente:
+
+bash
+Copiar
+Editar
+npm run dev

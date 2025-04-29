@@ -30,26 +30,26 @@ export default function CardExpandedView({
   const [editedDateLocal, setEditedDateLocal] = useState(dateLocal);
   const [editedDateHour, setEditedDateHour] = useState(dateHour);
 
-  // Função para deletar uma memória
+
   const removeOneItem = async () => {
     try {
       await api.delete(`/post/delete/${identifier}`);
-      // Remove a memória do estado local
+     
       const updatedMemories = memories.filter((memory) => memory.id !== identifier);
       setMemories(updatedMemories);
     } catch (e) {
       console.log('Erro ao deletar memória:', e);
     } finally {
-      readAllPostMemory(); // Recarrega as memórias da API (opcional, se necessário)
+      readAllPostMemory(); 
     }
   };
 
-  // Função para iniciar o modo de edição
+
   const handleEdit = () => {
     setIsEditing(true);
   };
 
-  // Função para cancelar a edição
+ 
   const handleCancel = () => {
     // Restaura os valores originais
     setEditedTitle(titleOfMemory);
