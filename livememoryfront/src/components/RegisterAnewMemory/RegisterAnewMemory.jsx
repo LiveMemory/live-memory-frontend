@@ -19,15 +19,53 @@ import backIcon from '../../assets/img/backIcon.svg'
 import warningContent from '../../assets/img/warning-content.svg'
 import { api } from '../../services/api.js';
 
-export default function RegisterAnewMemory({isCreating,setIsCreating}) {
-    const [categoryToggle, setCategoryToggle] = useState(false);
-    const [categoryOption, setCategoryOption] = useState('')
-    const [categoryValue,setCategoryValue] = useState('')
-    const [titleValue,setTitleValue] = useState('')
-    const [descriptionValue,setDescriptionValue] = useState('')
-    const [isWarningContent,setIsWarningContent] = useState(false)
-    const [EmoteToggle, setEmoteToggle] = useState(false);
-    const [emoteOption, setEmoteOption] = useState({})
+export default function RegisterAnewMemory({  isCreating,
+    setIsCreating,
+     categoryToggle,
+     setCategoryToggle,
+     categoryOption, 
+     setCategoryOption,
+     categoryValue,
+     setCategoryValue,
+     titleValue,
+     setTitleValue,
+     descriptionValue,
+     setDescriptionValue,
+     isWarningContent,
+     setIsWarningContent,
+     EmoteToggle,
+      setEmoteToggle,
+     emoteOption,
+      setEmoteOption,
+     SucessImage,
+     setSucessImage,
+     selectedFile,
+     setSelectedFile,
+     teste,
+     setTeste,}) {
+
+
+   
+
+    const getSelectedFile = (event) => {
+        console.log('Evento onChange disparado:', event.target.files);
+        const file = event.target.files[0];
+        setSelectedFile(file);
+        setSucessImage(null);
+    
+        if (file) {
+            console.log('Arquivo selecionado:', file);
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const readerResult = e.target.result;
+                console.log('Imagem carregada:', readerResult);
+                setTeste(readerResult);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            setTeste(null);
+        }
+    };
     
 
     const CreateOneMemory = async(e)=>{
@@ -66,6 +104,7 @@ export default function RegisterAnewMemory({isCreating,setIsCreating}) {
     useEffect(() => {
         console.log(descriptionValue.length)
     }, [emoteOption])
+    
 
     const emoteOptions = [
 
@@ -102,6 +141,12 @@ export default function RegisterAnewMemory({isCreating,setIsCreating}) {
                     <label htmlFor="desc">Texto:</label>
                     <input type="text" placeholder='Uma descrição' className='w-full bg-transparent outline-none' id='desc' value={descriptionValue} onChange={(e)=>setDescriptionValue(e.target.value)} />
                 </div>
+                <label className={`bg-ocean-gray/30 border-2 flex justify-center items-center text-center cursor-pointer w-[150px] mx-auto mt-5 hover:bg-ocean-gray/55 border-dashed   
+                                ${selectedFile!=null?"border-white":"border-gray-500"} rounded-full min-h-[75px]   text-white`} id='place-image-picture' htmlFor="select-type-file" >
+                                    {selectedFile !=null? <img className=' w-full     hover:animate-pulse  rounded-full' src={teste} alt="" />
+                                    :null}</label>
+                      
+                <input type={"file"} accept='image/*' className="hidden" name="inputfiles" id='select-type-file' onChange={getSelectedFile}   required />
             </div>
             <div className='w-full justify-center flex'>
                 <button type='button' className={`flex ${isWarningContent? "bg-yellow-300 justify-around":"bg-gray-500/15 justify-center"} rounded-md py-2 px-4  items-center gap-x-2`} onClick={()=> setIsWarningContent(!isWarningContent)}>

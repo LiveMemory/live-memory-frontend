@@ -185,7 +185,7 @@ export default function CardExpandedView({
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ type: 'spring', stiffness: 180 }}
               >
-                <p className="md:text-2xl text-lg">{titleOfMemory}</p>
+                <p className="text-base">{titleOfMemory}</p>
                 <div className="flex flex-col text-xs font-light">
                   <p>
                     {dateLocal}, às {dateHour}
@@ -219,9 +219,13 @@ export default function CardExpandedView({
             </div>
 
             <div className="flex justify-center items-center flex-wrap mb-4 gap-x-2 gap-y-3">
+              
               <motion.button
                 className="py-2 px-8 flex items-center bg-live-memory-semi-light-red justify-center rounded-md"
                 onClick={removeOneItem}
+                whileHover={{ boxShadow: '2px 4px 6px 2px rgba(0,0,0,0.9)' }}
+                transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+           
               >
                 <img src={iconTrashMemory} alt="Deletar" className="w-[25px]" />
               </motion.button>

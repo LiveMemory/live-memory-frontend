@@ -38,15 +38,14 @@ const[isCreating,setIsCreating] = useState(false)
   return (
     <div className='flex flex-col font-poppins  w-full  '>
    <MemoryHeader IconOfMode={moonMode} isFixed={isfixed}/>
-   
-   <AcessToActionLargest isCreating={isCreating} setIsCreating={setIsCreating}/>
+
    <main className='flex flex-col '>
    <MemoryHero/>
    <HistoryTitle lineDecoration={lineDecoration}/>
    
   <MemorableUnionOfHistories />
   </main>
-  <MemoryFooter scrolling={isfixed} setIsCreating={setIsCreating} isCreating={isCreating} />
+  <MemoryFooter scrolling={isfixed} isCreating={isCreating}  setIsCreating={setIsCreating} />
 
     </div>
   )

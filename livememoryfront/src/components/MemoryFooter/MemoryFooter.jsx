@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 //componentes
 import RegisterAnewMemory from '../../components/RegisterAnewMemory/RegisterAnewMemory.jsx'
@@ -9,8 +9,22 @@ import javaIcon from '../../assets/img/java.svg'
 import copyrightIcon from '../../assets/img/copyrightIcon.svg'
 import filterIcon from '../../assets/img/filter-icon.svg'
 import createIcon from '../../assets/img/create-icon.svg'
+import AcessToActionLargest from '../AcessToActionLargest/AcessToActionLargest.jsx'
+import { motion } from 'framer-motion'
 
 export default function MemoryFooter({scrolling,setIsCreating,isCreating}) {
+    const [categoryToggle, setCategoryToggle] = useState(false);
+    const [categoryOption, setCategoryOption] = useState('')
+    const [categoryValue,setCategoryValue] = useState('')
+    const [titleValue,setTitleValue] = useState('')
+    const [descriptionValue,setDescriptionValue] = useState('')
+    const [isWarningContent,setIsWarningContent] = useState(false)
+    const [EmoteToggle, setEmoteToggle] = useState(false);
+    const [emoteOption, setEmoteOption] = useState({})
+    const [SucessImage,setSucessImage] = useState(null)
+    const [selectedFile,setSelectedFile] = useState(null)
+    const [teste,setTeste] = useState(null)
+
     return (
     
             <div className='w-full h-min font-poppins bg-black  mt-[400px] shrink-0  pb-[68px] md:py-0   flex transition-all duration-[2000ms] ease-in-out flex-col space-y-3 md:pb-4'>
@@ -41,20 +55,71 @@ export default function MemoryFooter({scrolling,setIsCreating,isCreating}) {
                 <img src={copyrightIcon} alt="" className='w-[25px]' />
                 <p className='font-normal text-white text-base'>Copyright 2025</p>
                 </div>
+                     <div className='hidden md:flex'>
+                     <AcessToActionLargest 
+                     isCreating={isCreating} 
+                     setIsCreating={setIsCreating}
+                      categoryToggle={categoryToggle} 
+                      setCategoryToggle={setCategoryToggle} 
+                      categoryOption={categoryOption} 
+                      setCategoryOption={setCategoryOption}
+                      categoryValue={categoryValue}
+                      setCategoryValue={setCategoryValue}
+                      titleValue={titleValue}
+                      setTitleValue={setTitleValue}
+                      descriptionValue={descriptionValue} 
+                      setDescriptionValue={setDescriptionValue}
+                      isWarningContent={isWarningContent} 
+                      setIsWarningContent={setIsWarningContent}
+                      EmoteToggle={EmoteToggle} 
+                       setEmoteToggle={setEmoteToggle}
+                      emoteOption={emoteOption} 
+                       setEmoteOption={setEmoteOption}
+                      SucessImage={SucessImage} 
+                      setSucessImage={setSucessImage}
+                      selectedFile={selectedFile} 
+                      setSelectedFile={setSelectedFile}
+                      teste={teste} 
+                      setTeste={setTeste}/>
+                     </div>
 
                 <div className={`w-full h-full justify-end    md:hidden flex fixed flex-col  z-50 bottom-0 right-0 left-0`}>
-                {isCreating&&<div className='w-full h-full bg-black/50  flex items-end justify-center  '>
-                <RegisterAnewMemory isCreating={isCreating} setIsCreating={setIsCreating}/>
+                {isCreating && <div className='w-full h-full bg-black/50  flex items-end justify-center  '>
+                    <RegisterAnewMemory  isCreating={isCreating} 
+                     setIsCreating={setIsCreating}
+                      categoryToggle={categoryToggle} 
+                      setCategoryToggle={setCategoryToggle} 
+                      categoryOption={categoryOption} 
+                      setCategoryOption={setCategoryOption}
+                      categoryValue={categoryValue}
+                      setCategoryValue={setCategoryValue}
+                      titleValue={titleValue}
+                      setTitleValue={setTitleValue}
+                      descriptionValue={descriptionValue} 
+                      setDescriptionValue={setDescriptionValue}
+                      isWarningContent={isWarningContent} 
+                      setIsWarningContent={setIsWarningContent}
+                      EmoteToggle={EmoteToggle} 
+                       setEmoteToggle={setEmoteToggle}
+                      emoteOption={emoteOption} 
+                       setEmoteOption={setEmoteOption}
+                      SucessImage={SucessImage} 
+                      setSucessImage={setSucessImage}
+                      selectedFile={selectedFile} 
+                      setSelectedFile={setSelectedFile}
+                      teste={teste} 
+                      setTeste={setTeste} />
+
                 </div>}
                 <div className='h-fit flex bg-black  justify-around px-12 items-center '>
                     <button type='button' className='w-fit cursor-pointer flex'>
                         <img src={filterIcon} alt="" className='w-[35px]' />
                     </button>
-                    <button type='button' className='w-fit cursor-pointer flex' onClick={()=>setIsCreating(!isCreating)}>
+                    <button type='button' className='w-fit cursor-pointer flex' onClick={() => setIsCreating(!isCreating)}>
                         <img src={createIcon} alt="" className='w-[35px]' />
                     </button>
-                    </div>
                 </div>
+            </div>
             </div>
       
     )
