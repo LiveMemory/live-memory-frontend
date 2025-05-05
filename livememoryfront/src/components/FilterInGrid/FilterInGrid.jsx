@@ -49,12 +49,12 @@ export default function FilterInGrid({setIsFilter,isFilter,setIsCreating,    cat
     },[categoryOption.value])
     
   return (
-    <div className='w-full md:fixed bottom-0 p-2 flex flex-col  bg-black min-h-[100px]'>
+    <div className='w-full md:fixed bottom-0 p-2 flex flex-col gap-y-4  bg-black min-h-[100px]'>
         <div className='flex justify-between'>
         <h3 className='text-white font-semibold my-2'>Filtro</h3>
         <button className='text-white' onClick={()=>setIsFilter(!isFilter)}>X</button>
         </div>
-        <div className=' w-[55%] mx-auto  bg-white flex  justify-center'>
+        <div className=' lg:w-[25%] md:w-[44%] w-[50%] mx-auto rounded-t-xl  bg-white/50 flex  justify-center'>
      <MemoryDropDown grid={true} toggle={categoryToggle} setToggle={setCategoryToggle} options={categoryOptions} selectedOption={categoryOption} Options={CollectCategoryOption} SelectOneOption={"Categorias"} />
      </div>
         <div className='grid grid-cols-4 w-[50%] mx-auto   place-items-center'>
