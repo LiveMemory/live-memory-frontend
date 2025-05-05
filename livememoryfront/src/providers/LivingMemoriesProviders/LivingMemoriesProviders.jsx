@@ -1,11 +1,14 @@
 
+import { FilterMemoriesProvider } from '../../context/FilterMemoriesContext/FilterMemoriesContext'
 import { LivingMemoriesProvider } from '../../context/LivingMemoriesContext/LivingMemoriesContext'
 
-export default function LivingMemoriesProviders({children}) {
+export default function LivingMemoriesProviders({ children }) {
   return (
-    <LivingMemoriesProvider>
+    <FilterMemoriesProvider>
+      <LivingMemoriesProvider>
         {children}
-    </LivingMemoriesProvider>
+      </LivingMemoriesProvider>
+    </FilterMemoriesProvider>
 
   )
 }

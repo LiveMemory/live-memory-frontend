@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 
 import ButtonSelectOption from '../ButtonSelectOption/ButtonSelectOption'
 
-export default function MemoryDropDown({ toggle, setToggle, options, Options, selectedOption, SelectOneOption, emotes }) {
+export default function MemoryDropDown({ toggle, setToggle, options, Options, selectedOption, SelectOneOption, emotes,grid }) {
   
     const [selectedButton, setSelectedButton] = useState(null)
     return (
-        <div className='flex w-[55%]   text-black '>
+        <div className={`flex ${grid?"w-full":"w-[55%]"}   text-black `}>
 
             <div className='flex flex-col w-full '>
                 <div className="flex flex-col  h-fit  text-white  w-full ">
@@ -17,8 +17,8 @@ export default function MemoryDropDown({ toggle, setToggle, options, Options, se
                         className="flex flex-row-reverse  px-4 py-2   justify-between gap-2 text-black bg-calygam-semi-light-red/45 border border-black rounded-t-lg  shadow-sm outline-none"
                     >
                         {selectedOption ? (
-                            typeof selectedOption.label === 'string' && (selectedOption.label.endsWith('.png') || selectedOption.label.endsWith('.svg')) ? (
-                                <img src={`${selectedOption.label}`} alt="" className='w-[25px]' />
+                            typeof selectedOption.label === 'string' && (selectedOption.label.endsWith('.png') || selectedOption.label.endsWith('.svg') || selectedOption.label.endsWith('%3e')) ? (
+                                <img src={selectedOption.label} alt="" className='w-[25px]' />
                             ) : (
                                 selectedOption.label
                             )
@@ -34,12 +34,12 @@ export default function MemoryDropDown({ toggle, setToggle, options, Options, se
                             {options.map((option, index) => (
                              
                                 <li
-                                    key={option.value}
+                                    key={index}
                                     onClick={() => Options(option)}
                                     className="border-b border-black     group-hover:text-black    shadow-b-lg cursor-pointer"
                                 >
                                     {emotes?
-                                    <ButtonSelectOption identifier={index} textAreaDash={option.label} selectedButton={selectedButton} setSelectedButton={setSelectedButton} iconAreaDash={option.label} />
+                                    <ButtonSelectOption identifier={index}  textAreaDash={option.label} selectedButton={selectedButton} setSelectedButton={setSelectedButton} iconAreaDash={option.label} />
                                     : <ButtonSelectOption identifier={index} textAreaDash={option.label} selectedButton={selectedButton} setSelectedButton={setSelectedButton} 
                                     />}
                                     

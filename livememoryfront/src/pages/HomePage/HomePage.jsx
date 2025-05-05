@@ -15,6 +15,7 @@ import lineDecoration from '../../assets/img/line-decoration-one.svg'
 
 export default function HomePage() {
 const[isCreating,setIsCreating] = useState(false)
+const [isFilter,setIsFilter] = useState(false)
 
 
   const [isfixed, setIsFixed] = useState(false);
@@ -34,9 +35,20 @@ const[isCreating,setIsCreating] = useState(false)
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  useEffect(() => {
+    if (isCreating) {
+      document.body.style.overflow = 'hidden'; 
+    } else {
+      document.body.style.overflow = 'auto'; 
+    }
+  
+    return () => {
+      document.body.style.overflow = 'auto'; 
+    };
+  }, [isCreating]);
 
   return (
-    <div className='flex flex-col font-poppins  w-full  '>
+    <div className={`flex flex-col font-poppins ${isCreating?"overflow-y-hidden ":"overflow-auto"}   w-full  `}>
    <MemoryHeader IconOfMode={moonMode} isFixed={isfixed}/>
 
    <main className='flex flex-col '>
@@ -45,7 +57,7 @@ const[isCreating,setIsCreating] = useState(false)
    
   <MemorableUnionOfHistories />
   </main>
-  <MemoryFooter scrolling={isfixed} isCreating={isCreating}  setIsCreating={setIsCreating} />
+  <MemoryFooter scrolling={isfixed} isCreating={isCreating} setIsFilter={setIsFilter} isFilter={isFilter}  setIsCreating={setIsCreating} />
 
     </div>
   )

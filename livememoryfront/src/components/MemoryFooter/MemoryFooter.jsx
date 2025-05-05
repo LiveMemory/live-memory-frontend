@@ -12,7 +12,9 @@ import createIcon from '../../assets/img/create-icon.svg'
 import AcessToActionLargest from '../AcessToActionLargest/AcessToActionLargest.jsx'
 import { motion } from 'framer-motion'
 
-export default function MemoryFooter({scrolling,setIsCreating,isCreating}) {
+import FilterInGrid from '../../components/FilterInGrid/FilterInGrid.jsx'
+
+export default function MemoryFooter({scrolling,setIsCreating,isCreating,isFilter,setIsFilter}) {
     const [categoryToggle, setCategoryToggle] = useState(false);
     const [categoryOption, setCategoryOption] = useState('')
     const [categoryValue,setCategoryValue] = useState('')
@@ -57,8 +59,8 @@ export default function MemoryFooter({scrolling,setIsCreating,isCreating}) {
                 </div>
                      <div className='hidden md:flex'>
                      <AcessToActionLargest 
-                     isCreating={isCreating} 
-                     setIsCreating={setIsCreating}
+                        setIsCreating={setIsCreating}
+                        isCreating={isCreating}
                       categoryToggle={categoryToggle} 
                       setCategoryToggle={setCategoryToggle} 
                       categoryOption={categoryOption} 
@@ -80,11 +82,14 @@ export default function MemoryFooter({scrolling,setIsCreating,isCreating}) {
                       selectedFile={selectedFile} 
                       setSelectedFile={setSelectedFile}
                       teste={teste} 
-                      setTeste={setTeste}/>
+                      setTeste={setTeste}
+                      setToggle={setCategoryToggle}
+                      setIsFilter={setIsFilter}
+                      isFilter={isFilter}/>
                      </div>
 
-                <div className={`w-full h-full justify-end    md:hidden flex fixed flex-col  z-50 bottom-0 right-0 left-0`}>
-                {isCreating && <div className='w-full h-full bg-black/50  flex items-end justify-center  '>
+                <div className={`w-full  ${isCreating?"h-full":"h-fit"} justify-end z-30   md:hidden flex fixed flex-col   bottom-0 right-0 left-0`}>
+                {isCreating && <div className={`w-full  bg-black/50 ${isCreating?"h-full":"h-fit"}  flex items-end justify-center  `}>
                     <RegisterAnewMemory  isCreating={isCreating} 
                      setIsCreating={setIsCreating}
                       categoryToggle={categoryToggle} 
@@ -108,11 +113,16 @@ export default function MemoryFooter({scrolling,setIsCreating,isCreating}) {
                       selectedFile={selectedFile} 
                       setSelectedFile={setSelectedFile}
                       teste={teste} 
-                      setTeste={setTeste} />
+                      setTeste={setTeste}
+                      setIsFilter={setIsFilter}
+                      isFilter={isFilter}
+                      
+                       />
 
                 </div>}
+                {isFilter&&<FilterInGrid setIsCreating={setIsCreating} setIsFilter={setIsFilter} isFilter={isFilter} categoryOption={categoryOption} categoryToggle={categoryToggle} setCategoryOption={setCategoryOption} setCategoryToggle={setCategoryToggle}/>}
                 <div className='h-fit flex bg-black  justify-around px-12 items-center '>
-                    <button type='button' className='w-fit cursor-pointer flex'>
+                    <button type='button' className='w-fit cursor-pointer flex' onClick={() => setIsFilter(!isFilter)}>
                         <img src={filterIcon} alt="" className='w-[35px]' />
                     </button>
                     <button type='button' className='w-fit cursor-pointer flex' onClick={() => setIsCreating(!isCreating)}>

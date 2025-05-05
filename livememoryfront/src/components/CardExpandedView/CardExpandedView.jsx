@@ -1,11 +1,30 @@
 import { motion } from 'framer-motion';
-import React, { useState } from 'react';
-import emojiIcon from '../../assets/img/love-emoji.svg';
+import React, { useEffect, useState } from 'react';
+import happyIcon from '../../assets/img/happy-icon.png'
+import loveIcon from '../../assets/img/love-icon.svg'
+import sadIcon from '../../assets/img/sad-icon.svg'
+import funnyIcon from '../../assets/img/funny-icon.svg'
+import friendshipIcon from '../../assets/img/friend-ship-icon.svg'
+import gratefulIcon from '../../assets/img/gratefull-icon.svg'
+import admirationIcon from '../../assets/img/adimiration-icon.svg'
+import warningContent from '../../assets/img/warning-content.svg'
+import peaceIcon from '../../assets/img/peace-icon.svg'
+import postIcon from '../../assets/img/post-icon.svg'
+import backIcon from '../../assets/img/backIcon.svg'
+import thoughtIcon from '../../assets/img/thought-icon.svg'
+import surprizeIcon from '../../assets/img/surprize-icon.svg'
+import ansietyIcon from '../../assets/img/ansiety-icon.svg'
+import angryIcon from '../../assets/img/angry-icon.svg'
+
 import iconTrashMemory from '../../assets/img/icon-trash-memory.svg';
+import iconRedTrashMemory from '../../assets/img/red-trashing.svg'
 import iconEditMemory from '../../assets/img/icon-edit-memory.svg';
 import iconCloseMemory from '../../assets/img/close-extended.svg';
 import { api } from '../../services/api';
 import { LivingMemoriesHook } from '../../hooks/LivingMemoriesHook/LivingMemoriesHook';
+import MemoryDropDown from '../MemoryDropDown/MemoryDropDown';
+import { ValidateForm } from '../../utils/ValidateForm/ValidateForm';
+import { TranslateEmotion } from '../../utils/TranslateEmotion/TranslateEmotion';
 
 export default function CardExpandedView({
   titleOfMemory,
@@ -17,30 +36,56 @@ export default function CardExpandedView({
   identifier,
   setIsHandleCardOpen,
   isHandleCardOpen,
+  isCreating,
+  setIsCreating,
+  categoryToggle,
+  setCategoryToggle,
+  categoryOption,
+  setCategoryOption,
+  categoryValue,
+  setCategoryValue,
+  titleValue,
+  setTitleValue,
+  descriptionValue,
+  setDescriptionValue,
+  isWarningContent,
+  setIsWarningContent,
+  EmoteToggle,
+  setEmoteToggle,
+  emoteOption,
+  setEmoteOption,
+  SucessImage,
+  setSucessImage,
+  selectedFile,
+  setSelectedFile,
+  teste,
+  category,
+  setTeste,
 }) {
   const { readAllPostMemory, setMemories, memories } = LivingMemoriesHook();
 
-  // Estado para controlar o modo de edição
   const [isEditing, setIsEditing] = useState(false);
 
-  // Estados locais para os dados editáveis
+
   const [editedTitle, setEditedTitle] = useState(titleOfMemory);
   const [editedDescription, setEditedDescription] = useState(descriptionOfMemory);
   const [editedCategory, setEditedCategory] = useState(emotionName);
   const [editedDateLocal, setEditedDateLocal] = useState(dateLocal);
   const [editedDateHour, setEditedDateHour] = useState(dateHour);
+  const [remove, setRemove] = useState(false)
+  const [validText, setValidText] = useState(false)
+  const [validDescription, setValidDescription] = useState(false)
 
 
   const removeOneItem = async () => {
     try {
-      await api.delete(`/post/delete/${identifier}`);
-     
-      const updatedMemories = memories.filter((memory) => memory.id !== identifier);
-      setMemories(updatedMemories);
+      await api.delete(`delete/${identifier}`);
+
+
     } catch (e) {
       console.log('Erro ao deletar memória:', e);
     } finally {
-      readAllPostMemory(); 
+      readAllPostMemory();
     }
   };
 
@@ -49,9 +94,9 @@ export default function CardExpandedView({
     setIsEditing(true);
   };
 
- 
+
   const handleCancel = () => {
-    // Restaura os valores originais
+    //caio<- Restaura os valores originais
     setEditedTitle(titleOfMemory);
     setEditedDescription(descriptionOfMemory);
     setEditedCategory(emotionName);
@@ -61,42 +106,195 @@ export default function CardExpandedView({
   };
 
 
-  const handleUpdateMemory = async () => {
+
+
+
+  const handleUpdateMemory = async (e) => {
+    e.preventDefault()
+    console.log(editedDescription)
     try {
-      const updatedData = {
-        title: editedTitle,
-        description: editedDescription,
-        category: editedCategory,
-  
-      };
+      var data = new FormData();
 
-      const response = await api.put(`/post/update/${identifier}`, updatedData);
 
-      
-      const updatedMemories = memories.map((memory) =>
-        memory.id === identifier ? { ...memory, ...updatedData } : memory
-      );
-      setMemories(updatedMemories);
+      data.append('title', editedTitle);
 
-      // Sai do modo de edição
-      setIsEditing(false);
+      data.append('description', editedDescription);
+      data.append('emoji', emoteOption.value);
+      data.append('category', categoryOption.value);
 
-      alert('Memória atualizada com sucesso!');
+      data.append('image', selectedFile ? selectedFile : ImageMoment)
+
+      await api.put(`update/${identifier}`, data)
+
     } catch (error) {
       console.error('Erro ao atualizar memória:', error);
       alert('Erro ao atualizar memória. Tente novamente.');
     }
+    finally {
+      readAllPostMemory()
+      setIsEditing(false);
+    }
   };
+
+
+
+
+  //TESTANDO
+  const getSelectedFile = (event) => {
+    console.log('Evento onChange disparado:', event.target.files);
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    setSucessImage(null);
+
+    if (file) {
+      console.log('Arquivo selecionado:', file);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const readerResult = e.target.result;
+        console.log('Imagem carregada:', readerResult);
+        setTeste(readerResult);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setTeste(null);
+    }
+  };
+
+
+  // const CreateOneMemory = async(e)=>{
+  //     e.preventDefault()
+  //     console.log(emoteOption)
+  //     try{
+  //     const response = await api.post("create",{
+  //         "title":editedTitle,
+  //         "description":descriptionValue,
+  //         "category":emoteOption.value,
+  //         "sensitiveContent":isWarningContent,
+
+  //     })
+  //      await readAllPostMemory(); 
+
+
+
+
+  //     }
+  //     catch(e){
+  //         console.log(e)
+
+  //     }
+  //     finally{
+  //         setIsCreating(!isCreating)
+  //     }
+
+  // }
+  useEffect(() => {
+    console.log(categoryOption.value)
+  }, [categoryOption.value])
+
+
+  const categoryOptions = [
+
+    { value: "FAMILY", label: "FAMÍLIA" },
+    { value: "SCHOOL", label: "ESCOLA" },
+    { value: "WORK", label: "TRABALHO" },
+    { value: "FRIENDS", label: "AMIGOS" },
+    { value: "TRAVEL", label: "VIAGEM" },
+    { value: "HOBBY", label: "PASSATEMPO" },
+    { value: "RELATIONSHIP", label: "RELAÇÃO" },
+    { value: "ACHIEVEMENT", label: "CONQUISTA" },
+    { value: "OTHER", label: "OUTROS" }
+
+  ]
+  const CollectCategoryOption = (option) => {
+    setCategoryOption(option);
+    setCategoryToggle(false);
+  }
+
+
+  // useEffect(() => {
+  //     console.log(descriptionValue.length)
+  // }, [emoteOption])
+  useEffect(() => {
+    setEmoteOption({
+      value: emotionName,
+      label: emotionName == 'HAPPY' ? happyIcon :
+        emotionName == "LOVE" ? loveIcon :
+          emotionName == "SAD" ? sadIcon :
+            emotionName == "FUNNY" ? funnyIcon :
+              emotionName == "FRIENDSHIP" ? friendshipIcon :
+                emotionName == "GRATEFUL" ? gratefulIcon :
+                  emotionName == "ADMIRATION" ? admirationIcon :
+                    emotionName == "PEACE" ? peaceIcon :
+                      emotionName == "THOUGHT" ? thoughtIcon :
+                        emotionName == "SURPRIZE" ? surprizeIcon :
+                          emotionName == 'ANSIETY' ? ansietyIcon :
+                            emotionName == "ANGRY" ? angryIcon : ':/'
+    })
+    setCategoryOption({
+      value: category, label: category == 'FAMILY' ? "FAMÍLIA" :
+        category == "SCHOOL" ? "ESCOLA" :
+          category == "WORK" ? "TRABALHO" :
+            category == "FRIENDS" ? "AMIGOS" :
+              category == "TRAVEL" ? "VIAGEM" :
+                category == "RELATIONSHIP" ? "RELAÇÃO" :
+                  category == "HOBBY" ? "PASSATEMPO" :
+                    category == "ACHIEVEMENT" ? "CONQUISTA" :
+                      category == "OTHER" ? "OUTROS" : ':/'
+    }
+
+    )
+    console.log(category)
+  }, [isEditing])
+
+
+
+
+
+
+
+
+  const emoteOptions = [
+
+    { value: "HAPPY", label: happyIcon },
+    { value: "LOVE", label: loveIcon },
+    { value: "SAD", label: sadIcon },
+    { value: "FUNNY", label: funnyIcon },
+    { value: "FRIENDSHIP", label: friendshipIcon },
+    { value: "GRATEFUL", label: gratefulIcon },
+    { value: "ADIMIRATION", label: admirationIcon },
+    { value: "PEACE", label: peaceIcon },
+    { value: "THOUGHT", label: thoughtIcon },
+    { value: "ANSIETY", label: ansietyIcon },
+    { value: "ANGRY", label: angryIcon },
+
+  ]
+  const CollectEmoteOption = (option) => {
+    setEmoteOption(option);
+    setEmoteToggle(false);
+  }
+  useEffect(() => {
+    if (isEditing || isHandleCardOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isEditing, isHandleCardOpen]);
 
   return (
     <motion.div
-      className="flex flex-col items-center bg-live-memory-semi-light-gray font-poppins rounded-2xl mb-8"
+      className="flex flex-col items-center bg-live-memory-semi-light-gray  font-poppins rounded-2xl mb-8"
       initial={{ rotateX: '360deg', rotateY: '360deg', scale: 0.4 }}
       whileInView={{ x: 0, y: 0, rotate: 0, scale: 1 }}
-      whileTap={{ scale: 1.07, cursor: 'zoom-in' }}
+
       viewport={{ once: true, amount: 0.1 }}
       transition={{ type: 'spring', stiffness: 180 }}
+
     >
+      
       <div className="w-full justify-center text-center bg-black rounded-t-2xl items-center">
         <motion.p
           className="text-white"
@@ -105,76 +303,70 @@ export default function CardExpandedView({
           viewport={{ once: true, amount: 0.1 }}
           transition={{ type: 'spring', stiffness: 180 }}
         >
-          {'História'}
+          {category == 'FAMILY' ? "FAMÍLIA" :
+            category == "SCHOOL" ? "ESCOLA" :
+              category == "WORK" ? "TRABALHO" :
+                category == "FRIENDS" ? "AMIGOS" :
+                  category == "TRAVEL" ? "VIAGEM" :
+                    category == "HOBBY" ? "PASSATEMPO" :
+                      category == "RELATIONSHIP" ? "RELAÇÃO" :
+                        category == "ACHIEVEMENT" ? "CONQUISTA" :
+                          category == "OTHER" ? "OUTROS" : null}
         </motion.p>
       </div>
-      <div className="overflow-y-auto h-[400px] flex flex-col items-center [-webkit-scrollbar]:hidden [scrollbar-width:none]">
+      <div className=" flex flex-col items-center px-6    ">
         {isEditing ? (
-          <div className="flex flex-col items-center space-y-5 w-full px-4">
-   
-            <input
-              type="text"
-              value={editedTitle}
-              onChange={(e) => setEditedTitle(e.target.value)}
-              className="border rounded p-1 text-lg md:text-2xl text-center w-full"
-              placeholder="Título"
-              aria-label="Editar título da memória"
-            />
 
-        
-           
 
-        
-            <div className="border-2 border-black flex flex-col items-center space-y-1 bg-white rounded-md py-4 md:py-2 md:px-12 px-6">
-              <input
-                type="text"
-                value={editedCategory}
-                onChange={(e) => setEditedCategory(e.target.value)}
-                className="border rounded p-1 text-center"
-                placeholder="Categoria"
-                aria-label="Editar categoria da memória"
-              />
-              <img src={emojiIcon} alt="Emoji" className="w-[25px]" />
+          <form className='w-[98%]  font-poppins        bg-white pb-24 flex flex-col items-center  space-y-6  text-black rounded-md ' onSubmit={handleUpdateMemory} onClick={() => ValidateForm(setValidText, setValidDescription, editedTitle, editedDescription)}>
+            <div className='flex px-6 gap-x-2 mt-2 justify-center '>
+              <MemoryDropDown toggle={categoryToggle} setToggle={setCategoryToggle} options={categoryOptions} selectedOption={categoryOption} Options={CollectCategoryOption} SelectOneOption={"Categorias"} />
+              <MemoryDropDown toggle={EmoteToggle} emotes={true} setToggle={setEmoteToggle} options={emoteOptions} selectedOption={emoteOption} Options={CollectEmoteOption} SelectOneOption={"reações"} />
             </div>
+            <div className='flex flex-col w-[75%] space-y-3'>
+              <div className='border-b-2  border-black'>
+                <label htmlFor="titulo">Titulo:</label>
+                <input type="text" placeholder='Um titulo' className='w-full bg-transparent outline-none' id='titulo' value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} />
 
-            {ImageMoment && (
-              <div className="w-full flex justify-center drop-shadow-2xl shadow-black/50">
-                <img
-                  src={ImageMoment}
-                  alt="Momento"
-                  className="md:w-[300px] w-[250px]"
-                />
               </div>
-            )}
+              {!validText ? <p className='text-xs text-red-500/85 text-wrap  font-extrabold'>*Este campo de deve contêr de 5 a 25 caracteres!</p> : <></>}
+              <div className='border-b-2 border-black'>
+                <label htmlFor="desc">Texto:</label>
+                <input type="text" placeholder='Uma descrição' className='w-full bg-transparent outline-none' id='desc' value={editedDescription} onChange={(e) => setEditedDescription(e.target.value)} />
+              </div>
+              {!validDescription ? <p className='text-xs text-red-500/85 font-extrabold'>*Este campo de deve contêr de 20 a 200 caracteres!</p> : <></>}
+              <label className={`bg-ocean-gray/30 border-2 flex justify-center items-center text-center min-h-[50px] cursor-pointer  mx-auto mt-5 hover:bg-blue-600/35 border-dashed   
+                                  ${selectedFile != null ? "border-black" : "border-black/50  "} rounded-md transition-all ease-in-out duration-[2000ms]    text-white`} id='place-image-picture' htmlFor="select-type-file" >
+                {selectedFile != null ? <img className=' w-[150px] md:w-[300px]  rounded-md    hover:animate-pulse  ' src={teste} alt="" />
+                  : <span className='p-2 text-black opacity-65 flex'>Selecione uma imagem</span>}</label>
 
-            {/* Input para a descrição */}
-            <div className="w-[80%] mt-4 flex justify-center mb-6 drop-shadow-2xl shadow-black/50">
-              <textarea
-                value={editedDescription}
-                onChange={(e) => setEditedDescription(e.target.value)}
-                className="border rounded p-1 text-xs text-center w-full"
-                placeholder="Descrição"
-                rows="3"
-                aria-label="Editar descrição da memória"
-              />
+              <input type={"file"} accept='image/*' className="hidden" id='select-type-file' onChange={getSelectedFile} />
             </div>
+            <div className='w-full justify-center flex'>
+              <button type='button' className={`flex ${isWarningContent ? "bg-yellow-300 justify-around" : "bg-gray-500/15 justify-center"} rounded-md py-2 px-4  items-center gap-x-2`} onClick={() => setIsWarningContent(!isWarningContent)}>
 
-            {/* Botões Salvar e Cancelar */}
-            <div className="flex justify-center items-center flex-wrap mb-4 gap-x-2 gap-y-3">
-              <motion.button
-                className="py-2 px-8 flex items-center bg-green-500 text-white justify-center rounded-md"
-                onClick={handleUpdateMemory}
-              >
-                Salvar
-              </motion.button>
-              <motion.button
-                className="py-2 px-8 flex items-center bg-red-500 text-white justify-center rounded-md"
-                onClick={handleCancel}
-              >
-                Cancelar
-              </motion.button>
+                <img src={warningContent} alt="" className='w-[25px]' />
+                <p className={`transition-all ease-in-out duration-[1010ms]  ${isWarningContent ? "w-fit opacity-100 text-xs" : "w-0 overflow-hidden absolute -z-50 opacity-0"}`}>Conteúdo Sensível!</p>
+
+              </button>
             </div>
-          </div>
+            <div className='w-full justify-center gap-x-2 flex'>
+              <button type='button' className='py-2 px-8 flex gap-x-1 rounded-md bg-black' onClick={() => setIsEditing(false)}>
+                <img src={backIcon} alt="" className='w-[25px]' />
+                <p className='text-base text-white'>Voltar</p>
+              </button>
+              {validText && validDescription ?
+                <button type='submit' className='py-2 px-4 flex gap-x-1 rounded-md bg-live-memory-light-blue'>
+                  <p className='text-base text-black'>Postar</p>
+                  <img src={postIcon} alt="" className='w-[25px]' />
+
+                </button> : <button type='button' className='py-2 px-4 flex gap-x-1 cursor-not-allowed rounded-md bg-live-memory-light-blue opacity-65'>
+                  <p className='text-base text-black'>Postar</p>
+                  <img src={postIcon} alt="" className='w-[25px]' />
+
+                </button>}
+            </div>
+          </form>
         ) : (
           <>
             <div className="grid grid-cols-2 gap-x-2 my-4 place-items-center">
@@ -185,7 +377,7 @@ export default function CardExpandedView({
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ type: 'spring', stiffness: 180 }}
               >
-                <p className="text-base">{titleOfMemory}</p>
+                <p className="md:text-base text-xs">{titleOfMemory}</p>
                 <div className="flex flex-col text-xs font-light">
                   <p>
                     {dateLocal}, às {dateHour}
@@ -199,8 +391,19 @@ export default function CardExpandedView({
                 viewport={{ once: true, amount: 0.1 }}
                 transition={{ type: 'spring', stiffness: 180 }}
               >
-                <p>{emotionName}</p>
-                <img src={emojiIcon} alt="Emoji" className="w-[25px]" />
+                <p>{TranslateEmotion[emotionName]}</p>
+                <img src={emotionName == 'HAPPY' ? happyIcon :
+                  emotionName == "LOVE" ? loveIcon :
+                    emotionName == "SAD" ? sadIcon :
+                      emotionName == "FUNNY" ? funnyIcon :
+                        emotionName == "FRIENDSHIP" ? friendshipIcon :
+                          emotionName == "GRATEFUL" ? gratefulIcon :
+                            emotionName == "ADMIRATION" ? admirationIcon :
+                              emotionName == "PEACE" ? peaceIcon :
+                                emotionName == "THOUGHT" ? thoughtIcon :
+                                  emotionName == "SURPRIZE" ? surprizeIcon :
+                                    emotionName == 'ANSIETY' ? ansietyIcon :
+                                      emotionName == "ANGRY" ? angryIcon : null} alt="Emoji" className="w-[25px]" />
               </motion.div>
             </div>
 
@@ -219,19 +422,22 @@ export default function CardExpandedView({
             </div>
 
             <div className="flex justify-center items-center flex-wrap mb-4 gap-x-2 gap-y-3">
-              
+
               <motion.button
                 className="py-2 px-8 flex items-center bg-live-memory-semi-light-red justify-center rounded-md"
-                onClick={removeOneItem}
+                // onClick={removeOneItem}
+                onClick={() => setRemove(!remove)}
                 whileHover={{ boxShadow: '2px 4px 6px 2px rgba(0,0,0,0.9)' }}
                 transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-           
+
               >
                 <img src={iconTrashMemory} alt="Deletar" className="w-[25px]" />
               </motion.button>
               <motion.button
                 className="py-2 px-8 flex items-center bg-live-memory-light-green justify-center rounded-md"
                 onClick={handleEdit}
+                whileHover={{ boxShadow: '2px 4px 6px 2px rgba(0,0,0,0.9)' }}
+                transition={{ type: 'spring', stiffness: 500, damping: 15 }}
               >
                 <img src={iconEditMemory} alt="Editar" className="w-[25px]" />
               </motion.button>
@@ -239,6 +445,8 @@ export default function CardExpandedView({
                 type="button"
                 className="py-2 px-4 flex items-center gap-x-2 bg-black justify-center rounded-md"
                 onClick={() => setIsHandleCardOpen(!isHandleCardOpen)}
+                whileHover={{ boxShadow: '2px 4px 6px 2px rgba(0,0,0,0.9)' }}
+                transition={{ type: 'spring', stiffness: 500, damping: 15 }}
               >
                 <img src={iconCloseMemory} alt="Fechar" className="w-[25px]" />
                 <p className="text-base text-white">Fechar</p>
