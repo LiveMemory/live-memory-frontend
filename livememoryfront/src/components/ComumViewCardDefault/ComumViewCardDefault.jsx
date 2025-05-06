@@ -102,7 +102,7 @@ export default function ComumViewCardDefault( {titleOfMemory,descriptionOfMemory
 
                        
                     >
-                        <img src={extendCard} alt="" className='w-[25px] transition-all ease-in-out duration-1000  group-hover:rotate-[360deg]'  />
+                        <img src={extendCard} alt="" className='w-[25px] transition-all ease-in-out duration-1000  group-hover:scale-125'  />
                         <p className='text-white text-xs'>Expandir</p>
                     </motion.button>
                 </div>
@@ -110,7 +110,7 @@ export default function ComumViewCardDefault( {titleOfMemory,descriptionOfMemory
         </div>
  
         <div className=' drop-shadow-2xl object-cover overflow-hidden  rounded-xl shadow-black/50'>
-                            <img src={ImageMoment} alt="" className='w-full transition-all ease-linear duration-[1600ms] rounded-xl h-min hover:scale-[2.10] hover:rotate-45  ' />
+                            <img src={ImageMoment} alt="" className='w-full transition-all ease-linear duration-1000 rounded-xl h-min hover:scale-[1.20]   ' />
                         </div>
     </div>
     <div className={`w-full bg-black rounded-b-2xl flex justify-center`}>

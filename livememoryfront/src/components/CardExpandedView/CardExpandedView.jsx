@@ -251,7 +251,9 @@ export default function CardExpandedView({
 
 
 
-
+useEffect(()=>{
+  setSelectedFile(null)
+},[])
 
   const emoteOptions = [
 
@@ -447,7 +449,7 @@ export default function CardExpandedView({
                 <img
                   src={ImageMoment}
                   alt="Momento"
-                  className="md:w-[300px] w-[250px]"
+                  className=" w-full max-h-[350px] hover:scale-105 transition-all shadow-lg shadow-black/50 ease-linear rounded-xl"
                 />
               </div>
             )}
