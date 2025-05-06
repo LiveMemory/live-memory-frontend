@@ -294,7 +294,42 @@ export default function CardExpandedView({
       transition={{ type: 'spring', stiffness: 180 }}
 
     >
+      {remove&&
+      <div className='w-full fixed flex justify-center items-center  z-50 bg-black/50 h-full rounded-2xl p-4'>
+        <motion.div initial={{ rotateX: '360deg', rotateY: '360deg', opacity:0,width:'2px' }}
+          whileInView={{ x: 0, y: 0, rotate: 0,  opacity:1,width:'100%'  }}
+
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ type: 'spring', stiffness: 60,damping:15 }}
+          className='w-[85%] md:top-16  flex flex-col gap-y-6    bg-black h-min rounded-2xl p-4'>
+            <p className='text-center text-white text-base'>Deseja realmente <span className='font-bold'>Excluir</span>?</p>
+            <div className='flex items-center justify-center md:justify-between gap-x-4 flex-wrap gap-y-4'>
+              <motion.button
+                className="py-2 px-8 flex items-center gap-x-2 justify-center rounded-md"
+                // onClick={removeOneItem}
+                onClick={() => removeOneItem(identifier)}
+                whileHover={{ boxShadow: '2px 4px 6px 2px rgba(0,0,0,0.9)' }}
+                transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+
+              >
+                <img src={iconRedTrashMemory} alt="Deletar" className="w-[25px]" />
+                <p className='text-red-600'>Deletar</p>
+              </motion.button>
+              <motion.button
+                type="button"
+                className="py-2 px-4 flex items-center gap-x-2 bg-black justify-center rounded-md"
+                onClick={() => setRemove(!remove)}
+                whileHover={{ boxShadow: '2px 4px 6px 2px rgba(0,0,0,0.9)' }}
+                transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+              >
+                    <img src={backIcon} alt="" className='w-[25px]' />
+                    <p className='text-base text-white'>Voltar</p>
+              </motion.button>
+              </div>
+        </motion.div>
       
+      </div>
+}
       <div className="w-full justify-center text-center bg-black rounded-t-2xl items-center">
         <motion.p
           className="text-white"

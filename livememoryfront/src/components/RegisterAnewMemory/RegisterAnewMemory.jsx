@@ -99,7 +99,7 @@ export default function RegisterAnewMemory({ isCreating,
             setIsWarningContent(false)
             setTitleValue('')
         setDescriptionValue('')
-            setEmoteOption({ value: 'HAPPY', label: happyIcon })
+            setEmoteOption({ value: 'FRIENDSHIP', label: friendshipIcon })
             setCategoryOption({ value: 'WORK', label: 'TRABALHO' })
             setIsCreating(!isCreating)
         }
@@ -130,7 +130,7 @@ export default function RegisterAnewMemory({ isCreating,
     //     console.log(descriptionValue.length)
     // }, [emoteOption])
     useEffect(() => {
-        setEmoteOption({ value: 'HAPPY', label: happyIcon })
+        setEmoteOption({ value: 'FRIENDSHIP', label: friendshipIcon })
         setCategoryOption({ value: 'WORK', label: 'TRABALHO' })
     }, [isCreating])
 
