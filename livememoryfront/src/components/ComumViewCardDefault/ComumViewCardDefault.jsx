@@ -107,8 +107,8 @@ export default function ComumViewCardDefault( {titleOfMemory,descriptionOfMemory
             </div>
         </div>
  
-        <div className=' drop-shadow-2xl object-cover  shadow-black/50'>
-                            <img src={ImageMoment} alt="" className='w-full rounded-xl h-min  ' />
+        <div className=' drop-shadow-2xl object-cover overflow-hidden  rounded-xl shadow-black/50'>
+                            <img src={ImageMoment} alt="" className='w-full transition-all ease-linear duration-[1600ms] rounded-xl h-min hover:scale-[2.10] hover:rotate-45  ' />
                         </div>
     </div>
     <div className={`w-full bg-black rounded-b-2xl flex justify-center`}>
