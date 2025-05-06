@@ -37,8 +37,8 @@ export default function MemorableUnionOfHistories() {
   });
 
   return (
-    <div className="w-full flex justify-center items-center lg:my-16 my-4">
-      <div className="lg:w-[90%] mt-20 lg:max-h-[800px] md:max-h-[400px] max-h-[350px] overflow-y-auto border-b-4 shadow-lg shadow-black/50 border-black/15 p-4 [-webkit-scrollbar]:hidden [scrollbar-width:none]">
+    <div className="w-full flex justify-center items-center  mt-4">
+      <div className="lg:w-[90%] mt-20 lg:max-h-[800px] mb-6  md:max-h-[400px] max-h-[350px] overflow-y-auto border-b-4 shadow-lg shadow-black/50 border-black/15 p-4 [-webkit-scrollbar]:hidden [scrollbar-width:none]">
         {filteredMemories.length > 0 ? (
           <div className="sm:columns-2 lg:columns-3 md:columns-2 columns-1 [&>div]:break-inside-avoid">
             {filteredMemories.map((memory, index) => (

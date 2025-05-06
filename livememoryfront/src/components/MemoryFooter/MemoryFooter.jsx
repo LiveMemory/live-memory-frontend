@@ -29,7 +29,7 @@ export default function MemoryFooter({scrolling,setIsCreating,isCreating,isFilte
 
     return (
     
-            <div className='w-full h-min font-poppins bg-black  mt-[400px] shrink-0  pb-[68px] md:py-0   flex transition-all duration-[2000ms] ease-in-out flex-col space-y-3 md:pb-4'>
+            <div className='w-full h-min font-poppins bg-black   shrink-0  pb-[68px] md:py-0   flex transition-all duration-[2000ms] ease-in-out flex-col space-y-3 md:pb-4'>
                 <div className='grid grid-cols-3 w-full    place-items-center px-2 pt-3 '>
                     <div className=' flex flex-col justify-center '>
 

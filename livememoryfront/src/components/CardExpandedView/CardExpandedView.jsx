@@ -107,7 +107,9 @@ export default function CardExpandedView({
 
 
 
-
+  useEffect(()=>{
+    setSelectedFile(null)
+  },[isEditing])
 
   const handleUpdateMemory = async (e) => {
     e.preventDefault()
@@ -192,6 +194,7 @@ export default function CardExpandedView({
   }, [categoryOption.value])
 
 
+
   const categoryOptions = [
 
     { value: "FAMILY", label: "FAMÍLIA" },
@@ -251,9 +254,6 @@ export default function CardExpandedView({
 
 
 
-useEffect(()=>{
-  setSelectedFile(null)
-},[])
 
   const emoteOptions = [
 
@@ -303,9 +303,9 @@ useEffect(()=>{
 
           viewport={{ once: true, amount: 0.1 }}
           transition={{ type: 'spring', stiffness: 60,damping:15 }}
-          className='w-[85%] md:top-16  flex flex-col gap-y-6    bg-black h-min rounded-2xl p-4'>
+          className='w-[85%] md:top-16 bottom-0 absolute md:sticky    flex flex-col gap-y-6    bg-black h-min rounded-2xl p-4'>
             <p className='text-center text-white text-base'>Deseja realmente <span className='font-bold'>Excluir</span>?</p>
-            <div className='flex items-center justify-center md:justify-between gap-x-4 flex-wrap gap-y-4'>
+            <div className='flex items-center justify-center md:justify-between gap-x-4  gap-y-4'>
               <motion.button
                 className="py-2 px-8 flex items-center gap-x-2 justify-center rounded-md"
                 // onClick={removeOneItem}
