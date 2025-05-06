@@ -38,10 +38,12 @@ export default function ComumViewCardDefault( {titleOfMemory,descriptionOfMemory
                 <p className=' text-base  font-normal'> {titleOfMemory} </p>
 
                 {ImageMoment && 
-                    <>
-                        <p className='text-xs font-light' >{descriptionOfMemory}</p>
-
-                    </>
+                      <p className="text-xs font-light">
+                      {descriptionOfMemory.length > 160
+                        ? `${descriptionOfMemory.slice(0, 160)}...`
+                        : descriptionOfMemory}
+                    </p>
+                
                 }
     
                       {!ImageMoment &&
