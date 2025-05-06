@@ -28,7 +28,7 @@ export default function ComumViewCardDefault( {titleOfMemory,descriptionOfMemory
       };
   return (
     <>
-    <div className='w-full  p-6 gap-x-2 cursor-zoom-in     flex   shadow-black/75 bg-live-memory-semi-light-gray  rounded-t-2xl'
+    <div className='w-full  p-6 gap-x-2 cursor-zoom-in     flex  flex-col items-center gap-y-6  shadow-black/75 bg-live-memory-semi-light-gray  rounded-t-2xl'
 
 
     >
@@ -40,9 +40,7 @@ export default function ComumViewCardDefault( {titleOfMemory,descriptionOfMemory
                 {ImageMoment && 
                     <>
                         <p className='text-xs font-light' >{descriptionOfMemory}</p>
-                        <div className=' drop-shadow-2xl  shadow-black/50'>
-                            <img src={ImageMoment} alt="" className='w-[125px] h-[75px] ' />
-                        </div>
+
                     </>
                 }
     
@@ -108,8 +106,10 @@ export default function ComumViewCardDefault( {titleOfMemory,descriptionOfMemory
                 </div>
             </div>
         </div>
-
-
+ 
+        <div className=' drop-shadow-2xl object-cover  shadow-black/50'>
+                            <img src={ImageMoment} alt="" className='w-full rounded-xl h-min  ' />
+                        </div>
     </div>
     <div className={`w-full bg-black rounded-b-2xl flex justify-center`}>
         <p className='text-white'>{category =='FAMILY'?"FAMÍLIA":

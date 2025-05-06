@@ -17,7 +17,7 @@ export default function MemoryDropDown({ toggle, setToggle, options, Options, se
                         className="flex flex-row-reverse  px-4 py-2   justify-between gap-2 text-black bg-calygam-semi-light-red/45 border border-black rounded-t-lg  shadow-sm outline-none"
                     >
                         {selectedOption ? (
-                            typeof selectedOption.label === 'string' && (selectedOption.label.endsWith('.png') || selectedOption.label.endsWith('.svg') || selectedOption.label.endsWith('%3e')) ? (
+                            typeof selectedOption.label === 'string' && (selectedOption.label.includes('.png') || selectedOption.label.includes('.svg') || selectedOption.label.endsWith('%3e') || selectedOption.label.includes('.svg?')) ? (
                                 <img src={selectedOption.label} alt="" className='w-[25px]' />
                             ) : (
                                 selectedOption.label

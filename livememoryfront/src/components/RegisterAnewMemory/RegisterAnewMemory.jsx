@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MemoryDropDown from '../MemoryDropDown/MemoryDropDown.jsx';
 
-import happyIcon from '../../assets/img/happy-icon.png'
+import happyIcon from '../../assets/img/happy-icon.svg'
 import loveIcon from '../../assets/img/love-icon.svg'
 import sadIcon from '../../assets/img/sad-icon.svg'
 import funnyIcon from '../../assets/img/funny-icon.svg'

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-import happyIcon from '../../assets/img/happy-icon.png'
+import happyIcon from '../../assets/img/happy-icon.svg'
 import loveIcon from '../../assets/img/love-icon.svg'
 import sadIcon from '../../assets/img/sad-icon.svg'
 import funnyIcon from '../../assets/img/funny-icon.svg'
@@ -369,7 +369,7 @@ export default function CardExpandedView({
                 <label htmlFor="desc">Texto:</label>
                 <input type="text" placeholder='Uma descrição' className='w-full bg-transparent outline-none' id='desc' value={editedDescription} onChange={(e) => setEditedDescription(e.target.value)} />
               </div>
-              {!validDescription ? <p className='text-xs text-red-500/85 font-extrabold'>*Este campo de deve contêr de 20 a 200 caracteres!</p> : <></>}
+              {!validDescription ? <p className='text-xs text-red-500/85 font-extrabold'>*Este campo de deve contêr de 50 a 500 caracteres!</p> : <></>}
               <label className={`bg-ocean-gray/30 border-2 flex justify-center items-center text-center min-h-[50px] cursor-pointer  mx-auto mt-5 hover:bg-blue-600/35 border-dashed   
                                   ${selectedFile != null ? "border-black" : "border-black/50  "} rounded-md transition-all ease-in-out duration-[2000ms]    text-white`} id='place-image-picture' htmlFor="select-type-file" >
                 {selectedFile != null ? <img className=' w-[150px] md:w-[300px]  rounded-md    hover:animate-pulse  ' src={teste} alt="" />
